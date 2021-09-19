@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import co.com.appgate.restcalculator.beans.OperatorsArray;
+import co.com.appgate.restcalculator.service.TokenServiceInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -27,6 +30,10 @@ public class TokenUtil implements Serializable {
 
 	@Value("${jwt.signing.key.secret}")
 	private String secret;
+	
+	
+	@Autowired
+	private TokenServiceInfo tokenServiceInfo;
 
 	@Value("${jwt.token.expiration.in.seconds}")
 	private Long expiration;
@@ -81,4 +88,10 @@ public class TokenUtil implements Serializable {
 	private Date calculateExpirationDate(Date createdDate) {
 		return new Date(createdDate.getTime() + expiration * 1000);
 	}
+	
+	public OperatorsArray validateIfUserHasActiveSession(String userDetails) {
+		
+		return tokenServiceInfo.fetchUserById(userDetails);
+	}
+	
 }

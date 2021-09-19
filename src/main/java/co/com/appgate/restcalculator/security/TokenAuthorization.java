@@ -46,6 +46,7 @@ public class TokenAuthorization extends OncePerRequestFilter {
 		String jwtToken = null;
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
+			System.out.println("este es el token prioncipal "+ jwtToken);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {

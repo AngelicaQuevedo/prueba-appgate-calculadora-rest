@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.com.appgate.restcalculator.beans.OperatorsArray;
 import co.com.appgate.restcalculator.repository.TokenDao;
 import co.com.appgate.restcalculator.service.TokenServiceInfo;
 
@@ -16,14 +17,28 @@ public class TokenServiceImpl implements TokenServiceInfo{
 	private TokenDao tokenDao;
 
 	@Override
-	public boolean saveToken(String token) {
+	public boolean saveToken(String name, String token) {
 		// TODO Auto-generated method stub
-		return tokenDao.saveToken(token);
+		return tokenDao.saveToken(name, token);
 	}
 
 	@Override
-	public  List<List<Integer>> fetchAll() {
+	public  List<OperatorsArray> fetchAll() {
 		
 	return tokenDao.fetchAll();
 	}
+	
+	@Override
+	public OperatorsArray fetchUserById(String id) {
+	return tokenDao.fetchUserById(id);
+	    }
+
+	@Override
+	public boolean updateEntity(String string, String string2, OperatorsArray operatorsArray) {
+		
+		return tokenDao.update(string,string2,operatorsArray);
+		
+	}
+
+
 }

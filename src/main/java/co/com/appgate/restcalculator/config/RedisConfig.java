@@ -1,16 +1,14 @@
 package co.com.appgate.restcalculator.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import co.com.appgate.restcalculator.beans.OperatorsArray;
 
 @Configuration
 @EnableCaching
@@ -27,19 +25,24 @@ public class RedisConfig {
 				
 	}
 	
-	public RedisTemplate<String, List<Integer>> redisTemplate(){
+	public RedisTemplate<String,Object> redisTemplate(){
 		
-		 RedisTemplate<String,  List<Integer>> redisTemplate = new RedisTemplate<>();
+		 RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		 redisTemplate.setConnectionFactory(jedisConnectionFactory());
 		 redisTemplate.setKeySerializer(new StringRedisSerializer());
 		 redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-		 redisTemplate.setHashKeySerializer(new JdkSerializationRedisSerializer());	
-		 redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+		 redisTemplate.setValueSerializer(tokenCacheInfoSerializer());
+		 redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+
 		 redisTemplate.setEnableTransactionSupport(true);
 		 redisTemplate.afterPropertiesSet();
 		return redisTemplate;
-		 
 		
+		
+	}
+
+	private Jackson2JsonRedisSerializer<OperatorsArray> tokenCacheInfoSerializer() {
+		return new TokenCacheInfoRedisSerializer(OperatorsArray.class);
 	}
 	
 	

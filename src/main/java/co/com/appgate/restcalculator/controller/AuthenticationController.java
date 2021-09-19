@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.appgate.restcalculator.beans.OperatorsArray;
 import co.com.appgate.restcalculator.exception.AuthenticationException;
+import co.com.appgate.restcalculator.exception.UserAlreadyLogedException;
 import co.com.appgate.restcalculator.security.TokenRequest;
 import co.com.appgate.restcalculator.security.TokenResponse;
 import co.com.appgate.restcalculator.security.TokenUtil;
@@ -49,7 +51,7 @@ public class AuthenticationController {
 
 	@RequestMapping(value = "${get.token.path}", method = RequestMethod.POST, headers = "X-API-VERSION=1")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody TokenRequest authenticationRequest)
-			throws AuthenticationException{
+			throws AuthenticationException, UserAlreadyLogedException{
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
@@ -58,13 +60,26 @@ public class AuthenticationController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		
-		tokenServiceInfo.saveToken(token);
+		if (jwtTokenUtil.validateIfUserHasActiveSession(userDetails.getUsername())!=null) {
+			
+			throw new UserAlreadyLogedException("Usuario ya loggeado"); 
+			
+		}
+		
+		tokenServiceInfo.saveToken(userDetails.getUsername(),token);
+		
+		
 		return ResponseEntity.ok(new TokenResponse(token));
 	}
 
 	@ExceptionHandler({ AuthenticationException.class })
 	public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+	}
+	
+	@ExceptionHandler({ UserAlreadyLogedException.class })
+	private ResponseEntity<String> handleAuthenticationExceptionA(UserAlreadyLogedException e) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 
 	private void authenticate(String username, String password) {
@@ -81,8 +96,8 @@ public class AuthenticationController {
 	}
 	
 	@GetMapping("/info")
-	public List<List<Integer>> fetchInfo(){
-		List<List<Integer>> intArray;
+	public List<OperatorsArray>  fetchInfo(){
+		List<OperatorsArray> intArray;
 		intArray= tokenServiceInfo.fetchAll();
 		
 		
