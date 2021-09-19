@@ -1,13 +1,13 @@
-package co.com.appgate.calculadorarest;
+package co.com.appgate.restcalculator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CalculadoraRestApplication {
+public class RestCalculatorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CalculadoraRestApplication.class, args);
+		SpringApplication.run(RestCalculatorApplication.class, args);
 	}
 
 }
