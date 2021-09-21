@@ -5,13 +5,10 @@ import java.util.List;
 
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import co.com.appgate.restcalculator.beans.OperatorsArray;
+import co.com.appgate.restcalculator.domain.model.OperatorsArray;
 
 public class TokenCacheInfoRedisSerializer extends Jackson2JsonRedisSerializer<OperatorsArray> {
-
-
 
 	/**
 	 * Instantiates a new token cache info redis serializer.
@@ -25,7 +22,9 @@ public class TokenCacheInfoRedisSerializer extends Jackson2JsonRedisSerializer<O
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer#deserialize(byte[])
+	 * 
+	 * @see org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer#
+	 * deserialize(byte[])
 	 */
 	@Override
 	public OperatorsArray deserialize(byte[] bytes) {
@@ -35,10 +34,9 @@ public class TokenCacheInfoRedisSerializer extends Jackson2JsonRedisSerializer<O
 
 		} catch (SerializationException se) {
 
-
-			List<Integer> EmptyList = Collections.<Integer>emptyList(); 
-			//String value = new StringRedisSerializer().deserialize(bytes);
-			return new OperatorsArray(null,EmptyList);
+			List<Integer> EmptyList = Collections.<Integer>emptyList();
+			// String value = new StringRedisSerializer().deserialize(bytes);
+			return new OperatorsArray(null, EmptyList);
 		}
 	}
 

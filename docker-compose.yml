@@ -1,0 +1,29 @@
+version: '3'
+services:
+  api:
+    build:
+      .
+    image:
+      rest-calculator:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo-db
+      - redis
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongo-db
+      - MONGODB_HOST=mongo-db
+      - POL_HOME=${POL_HOME}
+  mongo-db:
+    image:
+      mongo:3.0.12
+    volumes:
+      - ${HOME}/mongo:/data/db
+    ports:
+      - 27017:27017
+  redis:
+    image:
+      redis
+    volumes:
+      - ${HOME}/redis:/data
+

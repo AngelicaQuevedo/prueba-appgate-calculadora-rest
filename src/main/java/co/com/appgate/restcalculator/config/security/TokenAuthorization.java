@@ -1,0 +1,85 @@
+package co.com.appgate.restcalculator.config.security;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import io.jsonwebtoken.ExpiredJwtException;
+
+/**
+ * TokenAuthorization
+ * @version 1.0, 18/09/21
+ * @author Angélica Quevedo
+ */
+
+@Component
+public class TokenAuthorization extends OncePerRequestFilter {
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	private UserDetailsService jwtInMemoryUserDetailsService;
+
+	@Autowired
+	private TokenUtil jwtTokenUtil;
+
+	@Value("${jwt.http.request.header}")
+	private String tokenHeader;
+	
+	private static final String UNABLE_TO_GET_USERNAME = "JWT_TOKEN_UNABLE_TO_GET_USERNAME";
+	private static final String DOES_NOT_START_WITH_BEARER_STRING= "JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING";
+	private static final String USERNAME_VALUE = "JWT_TOKEN_USERNAME_VALUE '{}'";
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws ServletException, IOException, ExpiredJwtException {
+		
+		logger.debug("Authentication Request For '{}'", request.getRequestURL());
+
+		final String requestTokenHeader = request.getHeader(this.tokenHeader);
+		
+		String username = null;
+		String jwtToken = null;
+		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+			
+			jwtToken = requestTokenHeader.substring(7);
+			try {
+				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+			} catch (IllegalArgumentException e) {
+				logger.error(UNABLE_TO_GET_USERNAME, e);
+			} 
+		} else {
+			logger.error(DOES_NOT_START_WITH_BEARER_STRING);
+		}
+
+		logger.debug(USERNAME_VALUE, username);
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
+
+			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken
+						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}
+		}
+
+		chain.doFilter(request, response);
+	}
+}

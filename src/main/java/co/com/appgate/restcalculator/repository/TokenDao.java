@@ -2,7 +2,7 @@ package co.com.appgate.restcalculator.repository;
 
 import java.util.List;
 
-import co.com.appgate.restcalculator.beans.OperatorsArray;
+import co.com.appgate.restcalculator.domain.model.OperatorsArray;
 
 public interface TokenDao {
 
@@ -13,6 +13,8 @@ public interface TokenDao {
 	OperatorsArray fetchUserById(String id);
 
 	boolean update(String string, String string2, OperatorsArray operatorsArray);
+
+	boolean remove(String name);
 
 
 

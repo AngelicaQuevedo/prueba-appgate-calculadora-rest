@@ -8,12 +8,20 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import co.com.appgate.restcalculator.beans.OperatorsArray;
+import co.com.appgate.restcalculator.domain.model.OperatorsArray;
+/**
+ * Configurations to redis
+ * @version 1.0, 18/09/21
+ * @author Angélica Quevedo
+ */
 
 @Configuration
 @EnableCaching
 public class RedisConfig {
 
+	/**
+	 * @return JedisConnectionFactory
+	 */
 	public JedisConnectionFactory jedisConnectionFactory() {
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 		redisStandaloneConfiguration.setHostName("127.0.0.1");
@@ -25,6 +33,9 @@ public class RedisConfig {
 				
 	}
 	
+	/**
+	 * @return RedisTemplate<String,Object> 
+	 */
 	public RedisTemplate<String,Object> redisTemplate(){
 		
 		 RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
