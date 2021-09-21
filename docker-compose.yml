@@ -11,19 +11,20 @@ services:
       - mongo-db
       - redis
     environment:
-      - SPRING_DATA_MONGODB_HOST=mongo-db
-      - MONGODB_HOST=mongo-db
-      - POL_HOME=${POL_HOME}
+      - SPRING_DATA_MONGODB_HOST=localhost
+      - MONGODB_HOST=localhost
   mongo-db:
     image:
       mongo:3.0.12
-    volumes:
-      - ${HOME}/mongo:/data/db
     ports:
       - 27017:27017
-  redis:
-    image:
-      redis
     volumes:
-      - ${HOME}/redis:/data
+      - ./data/db:/data/db
+    hostname: mongo
+  redis:
+    container_name: redis
+    image: redis
+    hostname: redis
+    ports:
+      - 6379:6379
 
