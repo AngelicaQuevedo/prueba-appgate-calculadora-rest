@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   api:
     build:
@@ -10,21 +10,18 @@ services:
     depends_on:
       - mongo-db
       - redis
-    environment:
-      - SPRING_DATA_MONGODB_HOST=localhost
-      - MONGODB_HOST=localhost
+    container_name: "rest-calculator"
   mongo-db:
     image:
-      mongo:3.0.12
+      mongo:latest
+    container_name: "mymongodb"
     ports:
       - 27017:27017
     volumes:
       - ./data/db:/data/db
-    hostname: mongo
   redis:
-    container_name: redis
     image: redis
-    hostname: redis
+    volumes:
+      - ./data/redis:/data/db
     ports:
       - 6379:6379
-

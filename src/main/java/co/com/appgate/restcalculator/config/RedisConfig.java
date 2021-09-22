@@ -1,5 +1,6 @@
 package co.com.appgate.restcalculator.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -19,13 +20,23 @@ import co.com.appgate.restcalculator.domain.model.OperatorsArray;
 @EnableCaching
 public class RedisConfig {
 
+	
+	/** The hostname. */
+	@Value("${redis.hostname}")
+	private String hostname;
+
+	/** The port. */
+	@Value("${redis.port}")
+	private Integer port;
+	
+	
 	/**
 	 * @return JedisConnectionFactory
 	 */
 	public JedisConnectionFactory jedisConnectionFactory() {
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-		redisStandaloneConfiguration.setHostName("127.0.0.1");
-		redisStandaloneConfiguration.setPort(6379);
+		redisStandaloneConfiguration.setHostName(hostname);
+		redisStandaloneConfiguration.setPort(port);
 		
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
 		return jedisConnectionFactory;
