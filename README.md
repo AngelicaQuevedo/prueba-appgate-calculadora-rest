@@ -73,3 +73,11 @@ endpoint to execute the operation sent, the whole list of integers that were hel
 
 * The generation of unit tests either with mock MVC, mockito and junit. 
 
+
+# How to upload the project 
+
+1. mvn clean install , on the main path of the project
+2. sudo docker run -p 6379:6379 redis
+3. sudo docker run -p 27017:27017 mongo
+4. Execute the following command in the root path java -jar target/calculadora-rest-0.0.1-SNAPSHOT.jar
+
