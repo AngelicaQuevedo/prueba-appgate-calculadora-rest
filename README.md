@@ -6,6 +6,7 @@ rest calculator, appgate test
 * spring-boot
 * spring-data-mongodb
 * redis
+* JWT
 
 # operation summary
 
@@ -16,6 +17,12 @@ rest calculator, appgate test
 "password":"dummy"
 }
 
+It is mandatory to send the token as a header token of type Bearer
+and the api version
+X-API-VERSION : 1
+
+Authorization:
+Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaWFuIiwiZXhwIjoxNjMyMjAzMjUxLCJpYXQiOjE2MzIyMDIwNTF9.MzePPQV7Lj2Xx6GTMaeM0yyZEeM7CmJnh0IQpfiooGgetjayCrdERa74GBEVWJfBEhelFirdye84_9xiPdwNew
 
 * http://localhost:8080/rest-calculator/execute-operation/sum
 
