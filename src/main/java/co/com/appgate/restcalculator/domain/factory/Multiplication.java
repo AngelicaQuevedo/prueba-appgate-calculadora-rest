@@ -1,4 +1,4 @@
-package co.com.appgate.restcalculator.domain.model;
+package co.com.appgate.restcalculator.domain.factory;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ public class Multiplication implements IOperationAdapter {
 
 	@Override
 	public Integer execute(List<Integer> operators) {
-		
-	if (operators.isEmpty()) {
-			
-			return 0; 
-			
+
+		if (operators.isEmpty()) {
+
+			return 0;
+
 		}
 
 		Integer total = 1;

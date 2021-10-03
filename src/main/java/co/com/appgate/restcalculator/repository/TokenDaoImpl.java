@@ -2,6 +2,7 @@ package co.com.appgate.restcalculator.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,12 +41,12 @@ public class TokenDaoImpl implements TokenDao {
 
 
 	@Override
-	public OperatorsArray fetchUserById(String id) {
+	public Optional<OperatorsArray> fetchUserById(String id) {
 
 		OperatorsArray arrayToken = null;
 		arrayToken = (OperatorsArray) redisTemplate.opsForHash().get(KEY,id);
 
-        return arrayToken;
+        return Optional.ofNullable(arrayToken);
 	}
 
 

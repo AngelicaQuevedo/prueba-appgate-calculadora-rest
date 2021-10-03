@@ -1,12 +1,13 @@
-package co.com.appgate.restcalculator.domain.model;
+package co.com.appgate.restcalculator.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.com.appgate.restcalculator.repository.TokenDao;
 import co.com.appgate.restcalculator.domain.model.OperatorsArray;
+import co.com.appgate.restcalculator.repository.TokenDao;
 
 
 
@@ -29,7 +30,7 @@ public class TokenServiceImpl implements TokenServiceInfo{
 	}
 	
 	@Override
-	public OperatorsArray fetchUserById(String id) {
+	public Optional<OperatorsArray> fetchUserById(String id) {
 	return tokenDao.fetchUserById(id);
 	    }
 

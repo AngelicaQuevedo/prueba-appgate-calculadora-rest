@@ -24,7 +24,7 @@ public class InMemoryUserDetailsService implements UserDetailsService {
 	private static final String USER_NOT_FOUND = "USER_NOT_FOUND '%s'.";
 
 	static {
-		volatileUserList.add(new TokenUserDetails(1L, "angelica",
+		volatileUserList.add(new TokenUserDetails(1L, "nana",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
 		volatileUserList.add(new TokenUserDetails(2L, "lian",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));

@@ -12,7 +12,6 @@ public class TokenCacheInfoRedisSerializer extends Jackson2JsonRedisSerializer<O
 
 	/**
 	 * Instantiates a new token cache info redis serializer.
-	 *
 	 * @param type the type
 	 */
 	public TokenCacheInfoRedisSerializer(Class<OperatorsArray> type) {

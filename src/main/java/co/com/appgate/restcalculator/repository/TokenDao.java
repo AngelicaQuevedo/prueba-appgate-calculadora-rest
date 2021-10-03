@@ -1,6 +1,7 @@
 package co.com.appgate.restcalculator.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import co.com.appgate.restcalculator.domain.model.OperatorsArray;
 
@@ -10,7 +11,7 @@ public interface TokenDao {
 
 	List<OperatorsArray> fetchAll();
 
-	OperatorsArray fetchUserById(String id);
+	Optional<OperatorsArray> fetchUserById(String id);
 
 	boolean update(String string, String string2, OperatorsArray operatorsArray);
 

@@ -4,8 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.javatuples.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import co.com.appgate.restcalculator.config.security.dto.TokenUserDetails;
 import co.com.appgate.restcalculator.domain.model.OperatorsArray;
-import co.com.appgate.restcalculator.domain.model.TokenServiceInfo;
+import co.com.appgate.restcalculator.service.TokenServiceInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -29,6 +35,8 @@ import io.jsonwebtoken.impl.DefaultClock;
 
 @Component
 public class TokenUtil implements Serializable {
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	static final String CLAIM_KEY_USERNAME = "sub";
 	static final String CLAIM_KEY_CREATED = "iat";
@@ -115,8 +123,28 @@ public class TokenUtil implements Serializable {
 		return new Date(createdDate.getTime() + expiration * 1000);
 	}
 	
-	public OperatorsArray validateIfUserHasActiveSession(String userDetails) {
+	public Optional<OperatorsArray> fetchUserInformation (String userDetails) {
 		return tokenServiceInfo.fetchUserById(userDetails);
+	}
+	
+	public Pair<String, String> getnameFromRequest(HttpServletRequest request) {
+
+		String tokenFromRequest = request.getHeader("Authorization");
+
+		String username = null;
+		String jwtToken = null;
+
+		if (tokenFromRequest != null && tokenFromRequest.startsWith("Bearer ")) {
+			jwtToken = tokenFromRequest.substring(7);
+			try {
+				username = getUsernameFromToken(jwtToken);
+			} catch (IllegalArgumentException e) {
+				   logger.error("UNABLE_TO_GET_USERNAME", e);
+			}
+		}
+		Pair<String, String> tupla = new Pair<String, String>(username, jwtToken);
+		return tupla;
+		
 	}
 	
 }

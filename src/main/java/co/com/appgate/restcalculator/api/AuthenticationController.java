@@ -26,7 +26,7 @@ import co.com.appgate.restcalculator.config.security.dto.TokenRequest;
 import co.com.appgate.restcalculator.config.security.dto.TokenResponse;
 import co.com.appgate.restcalculator.domain.exception.UserAlreadyLogedException;
 import co.com.appgate.restcalculator.domain.model.OperatorsArray;
-import co.com.appgate.restcalculator.domain.model.TokenServiceInfo;
+import co.com.appgate.restcalculator.service.TokenServiceInfo;
 
 /**
  * Authentication controller jwt
@@ -76,7 +76,7 @@ public class AuthenticationController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		
-		if (jwtTokenUtil.validateIfUserHasActiveSession(userDetails.getUsername())!=null) {
+		if (!jwtTokenUtil.fetchUserInformation(userDetails.getUsername()).isEmpty()) {
 			
 			throw new UserAlreadyLogedException(ALREADY_LOGGED); 
 			
@@ -119,8 +119,6 @@ public class AuthenticationController {
 	public List<OperatorsArray>  fetchInfo(){
 		List<OperatorsArray> intArray;
 		intArray= tokenServiceInfo.fetchAll();
-		
-		
 		return intArray;
 		
 		

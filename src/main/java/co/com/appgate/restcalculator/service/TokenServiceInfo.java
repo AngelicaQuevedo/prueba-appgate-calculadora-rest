@@ -1,6 +1,9 @@
-package co.com.appgate.restcalculator.domain.model;
+package co.com.appgate.restcalculator.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import co.com.appgate.restcalculator.domain.model.OperatorsArray;
 
 public interface TokenServiceInfo {
 	
@@ -9,7 +12,7 @@ public interface TokenServiceInfo {
 
 	boolean saveToken(String name, String token);
 
-	OperatorsArray fetchUserById(String id);
+	Optional<OperatorsArray> fetchUserById(String id);
 
 	boolean updateEntity(String string, String string2, OperatorsArray operatorsw);
 	

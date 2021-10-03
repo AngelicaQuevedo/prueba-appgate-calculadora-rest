@@ -1,4 +1,4 @@
-package co.com.appgate.restcalculator.domain.model;
+package co.com.appgate.restcalculator.domain.factory;
 
 import java.util.List;
 

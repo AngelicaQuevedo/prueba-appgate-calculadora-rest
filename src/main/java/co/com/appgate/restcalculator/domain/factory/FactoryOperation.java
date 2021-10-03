@@ -1,4 +1,6 @@
-package co.com.appgate.restcalculator.domain.model;
+package co.com.appgate.restcalculator.domain.factory;
+
+import co.com.appgate.restcalculator.domain.model.OperationType;
 
 public class FactoryOperation {
 	
