@@ -4,6 +4,12 @@ pipeline {
         maven 'Maven_3_6_3'
     }
     stages {
+    
+    	stage("Pull") {
+            steps {
+                git branch: "${env.BRANCH_NAME}", credentialsId: "1234Test", url: "https://github.com/AngelicaQuevedo/prueba-appgate-calculadora-rest.git"
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building calculator'
