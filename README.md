@@ -90,7 +90,6 @@ Here the operation sent as request param is executed with the list of elements p
 	* sum,
 	* subtraction,
 	* multiplication,
-	* division,
 	* potentiation
 
 ![alt text](https://github.com/AngelicaQuevedo/prueba-appgate-calculadora-rest/blob/develop/src/main/resources/operation.png?raw=true)
