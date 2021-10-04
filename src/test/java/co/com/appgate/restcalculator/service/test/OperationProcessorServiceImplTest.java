@@ -63,7 +63,7 @@ class OperationProcessorServiceImplTest {
 		when(jwtTokenUtil.fetchUserInformation("username")).thenReturn(dataRedis);
 		operationProcessorService.addingOperatorBySpecificStrategy(4, true, request);
 		
-		assertEquals(tokenServiceInfo.fetchUserById("username").get().getOperators(), Arrays.asList(1,2,3,4,null));
+		assertEquals(tokenServiceInfo.fetchUserById("username").get().getOperators(), Arrays.asList(1,2,3,4,0));
 	}
 
 	@Test

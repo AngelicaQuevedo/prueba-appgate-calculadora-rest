@@ -50,7 +50,7 @@ public class OperationProcessorServiceImpl implements OperationProcessorService 
 		Integer lastResult = null;
 
 		if (!dataRedis.isEmpty() && !isAddingpreviousResult) {
-
+			
 			List<Integer> operatorsList = new ArrayList<Integer>(dataRedis.get().getOperators());
 			operatorsList.add(operator);
 			OperatorsArray newEntityRedis = new OperatorsArray(data.getValue1(), operatorsList);
@@ -59,7 +59,7 @@ public class OperationProcessorServiceImpl implements OperationProcessorService 
 		}
 
 		if (dataRedis.isEmpty() && !isAddingpreviousResult) {
-
+			
 			List<Integer> operatorNewList = new ArrayList<Integer>();
 			operatorNewList.add(operator);
 			OperatorsArray newEntityRedisEmpty = new OperatorsArray(data.getValue1(), operatorNewList);
@@ -68,17 +68,18 @@ public class OperationProcessorServiceImpl implements OperationProcessorService 
 		}
 
 		if (dataRedis.isEmpty() && isAddingpreviousResult) {
-
+			
 			List<Integer> operatorNewListTrue = new ArrayList<Integer>();
 
 			List<UserOperationResult> mainUserData = userOperation.getByName(data.getValue0());
 
-			for (UserOperationResult o : mainUserData) {
-				lastResult = o.getResult();
-
+			if (!mainUserData.isEmpty()) {
+				for (UserOperationResult o : mainUserData) {
+					lastResult = o.getResult();
+				}
 			}
 
-			if (lastResult == null) {
+			else {
 				lastResult = 0;
 			}
 
@@ -90,12 +91,12 @@ public class OperationProcessorServiceImpl implements OperationProcessorService 
 		}
 
 		if (!dataRedis.isEmpty() && isAddingpreviousResult) {
+			
 
 			List<Integer> operatorsList = new ArrayList<Integer>(dataRedis.get().getOperators());
 			List<UserOperationResult> mainUserData = userOperation.getByName(data.getValue0());
 
-			if (mainUserData != null) {
-
+			if (!mainUserData.isEmpty()) {
 				for (UserOperationResult o : mainUserData) {
 					lastResult = o.getResult();
 				}

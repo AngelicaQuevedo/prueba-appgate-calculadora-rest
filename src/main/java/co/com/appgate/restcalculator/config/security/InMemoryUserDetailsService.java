@@ -24,15 +24,15 @@ public class InMemoryUserDetailsService implements UserDetailsService {
 	private static final String USER_NOT_FOUND = "USER_NOT_FOUND '%s'.";
 
 	static {
-		volatileUserList.add(new TokenUserDetails(1L, "nana",
+		volatileUserList.add(new TokenUserDetails(1L, "angelica",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
-		volatileUserList.add(new TokenUserDetails(2L, "lian",
+		volatileUserList.add(new TokenUserDetails(2L, "appgate",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
-		volatileUserList.add(new TokenUserDetails(2L, "maria",
+		volatileUserList.add(new TokenUserDetails(2L, "test",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
-		volatileUserList.add(new TokenUserDetails(2L, "pricila",
+		volatileUserList.add(new TokenUserDetails(2L, "goku",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
-		volatileUserList.add(new TokenUserDetails(2L, "nita",
+		volatileUserList.add(new TokenUserDetails(2L, "goten",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
 		volatileUserList.add(new TokenUserDetails(2L, "gohan",
 				"$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_2"));
