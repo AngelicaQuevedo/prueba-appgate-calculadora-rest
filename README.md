@@ -52,6 +52,10 @@ password : dummy
 
 ![alt text](https://github.com/AngelicaQuevedo/prueba-appgate-calculadora-rest/blob/develop/src/main/resources/auth.png?raw=true)
 
+Token expires:
+
+![alt text](https://github.com/AngelicaQuevedo/prueba-appgate-calculadora-rest/blob/develop/src/main/resources/expiredToken.png?raw=true)
+
 
 ```html
 curl --location --request POST 'http://localhost:8080/authenticate' \
@@ -107,6 +111,9 @@ curl --location --request GET 'http://localhost:8080/rest-calculator/execute-ope
 1. mvn clean install -Dmaven.test.skip=true
 2. sudo docker-compose build --no-cache
 3. sudo docker-compose up --force-recreate
+
+![alt text](https://github.com/AngelicaQuevedo/prueba-appgate-calculadora-rest/blob/develop/src/main/resources/PS.png?raw=true)
+
 
 # How to run the unit-test (manually).
 
